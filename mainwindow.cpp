@@ -8,12 +8,40 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-
+    srand(time(NULL));
+        losuj();
+        ui->setupUi(this);
+        dzwig=new QGraphicsScene(-50,-60,ui->graphicsView->width(),ui->graphicsView->height()) ;
+        ui->graphicsView->setScene(dzwig);
+        tlo.load(":/dzwig.png");
+        kwadrat.load(":/kwadrat.png");
+        kolo.load(":/kolo.png");
+        trojkat.load(":/trojkat.png");
+        paleta.load(":/paleta.png");
+        tak.load(":/tak.png");
+        nie.load(":/nie.png");
+        blizej.load(":/blizej.png");
+        bob.load(":/bob.png");
+        dzwig->addPixmap(tlo);
+        pocz_x=50;
+        kon_y=200;
+        nr_przesuwanej=9;
+        ile_odlozono=0;
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::losuj(){
+    int a=0;
+    for (int i=0; i<8; i++){
+        figury[i].czy_rysowac=true;
+        figury[i].rodzaj=rand()%3;
+        if (figury[i].rodzaj==0) a++;
+    }
+    if(a<3) losuj();
 }
 
 void MainWindow::on_pushButton_clicked()

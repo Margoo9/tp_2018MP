@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/">
+        <file>dzwig.png</file>
+        <file>kwadrat.png</file>
+        <file>kolo.png</file>
+        <file>trojkat.png</file>
+        <file>paleta.png</file>
+        <file>tak.png</file>
+        <file>nie.png</file>
+        <file>blizej.png</file>
+        <file>bob.png</file>
+		<file>Bob_The_Builder.mp3</file>
+    </qresource>
+</RCC>
