@@ -44,6 +44,7 @@ void MainWindow::losuj(){
     if(a<3) losuj();
 }
 
+
 void MainWindow:: rysuj_figury(int a, int b, int nr_przesuwanej){
     QGraphicsPixmapItem * wsk;
     for (int i=0; i<8; i++){
