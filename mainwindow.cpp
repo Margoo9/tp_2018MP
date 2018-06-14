@@ -44,6 +44,105 @@ void MainWindow::losuj(){
     if(a<3) losuj();
 }
 
+
+void MainWindow:: rysuj_figury(int a, int b, int nr_przesuwanej){
+    QGraphicsPixmapItem * wsk;
+    for (int i=0; i<8; i++){
+        figury[i].x=50*i;
+        figury[i].y=400;
+        if(i==nr_przesuwanej && czy_podniesiona==true)
+            for (int j=0; j<3; j++){
+                if (i==lista_przesunietych[j] ){
+                    figury[i].x=a-20;
+                    figury[i].y=b;
+                }
+            }
+      // qDebug()<<figury[i].czy_rysowac<<figury[i].rodzaj<<nr_przesuwanej<<pocz_x/50<<lista_przesunietych[0]<<lista_przesunietych[1]<<lista_przesunietych[2];
+        if(figury[i].czy_rysowac==true){
+            switch(figury[i].rodzaj){
+                case 0:
+                    wsk= dzwig->addPixmap(kwadrat);     //kwadrat
+                    wsk->setPos(figury[i].x, figury[i].y);
+                 break;
+                 case 1:
+                    wsk= dzwig->addPixmap(kolo);     //kolo
+                    wsk->setPos(figury[i].x, figury[i].y);
+                break;
+                case 2:
+                    wsk= dzwig->addPixmap(trojkat);     //trojkat
+                    wsk->setPos(figury[i].x, figury[i].y);
+                break;
+                }
+        }
+    }
+}
+
+
+
+
+void MainWindow::odklada(){
+    if(pocz_x>410 && czy_podniesiona==true){
+        ile_odlozono++;
+        czy_podniesiona=false;
+        figury[lista_przesunietych[ile_odlozono-1]].czy_rysowac=false;
+    }
+}
+
+
+void MainWindow::odswiez(){
+    QGraphicsPixmapItem * wsk;
+    dzwig->clear();
+    dzwig->addPixmap(tlo);
+    if(ile_odlozono==0){
+        rysuj_figury(pocz_x, kon_y, nr_przesuwanej);
+    }
+    if(ile_odlozono!=0){
+        switch (ile_odlozono){
+            case 1:
+                wsk= dzwig->addPixmap(kwadrat);
+                wsk->setPos(410, 385);
+                rysuj_figury(pocz_x, kon_y, nr_przesuwanej);
+            break;
+            case 2:
+                wsk= dzwig->addPixmap(kwadrat);
+                wsk->setPos(410, 385);
+                wsk= dzwig->addPixmap(kwadrat);
+                wsk->setPos(410, 345);
+                rysuj_figury(pocz_x, kon_y, nr_przesuwanej);
+            break;
+            case 3:
+                wsk= dzwig->addPixmap(kwadrat);
+                wsk->setPos(410, 385);
+                wsk= dzwig->addPixmap(kwadrat);
+                wsk->setPos(410, 345);
+                wsk= dzwig->addPixmap(kwadrat);
+                wsk->setPos(410, 305);
+                rysuj_figury(pocz_x, kon_y, nr_przesuwanej);
+            break;
+        }
+    }
+    QGraphicsPixmapItem * pal= dzwig->addPixmap(paleta);     //paleta
+    pal->setPos(400, 430);
+    dzwig->addLine(pocz_x,50, pocz_x, kon_y);
+    if(ile_odlozono==3){
+        wygrana();
+    }
+}
+
+
+
+
+void MainWindow::wygrana(){
+    QGraphicsPixmapItem * wsk;
+    dzwig->clear();
+    QMediaPlayer* muzyka = new QMediaPlayer();
+    muzyka->setMedia(QUrl("qrc:/Bob_The_Builder.mp3"));
+    muzyka->play();
+    wsk=dzwig->addPixmap(bob);
+    wsk->setPos(0, -70);
+}
+
+
 void MainWindow::on_pushButton_clicked()
 {
     odswiez();
